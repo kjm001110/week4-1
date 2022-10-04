@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>strawberry moon</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <style type="text/css">
+        .heart{position: absolute; left :0; top:0;}
+
+        .bg { margin: 0px; position: absolute; left :0; top:0; 
+                width: 100vw; height: 100vh;
+                object-fit: cover;
+                filter: blur(0px) saturate(100%) ; }
+       .typo{margin: 0px; position: absolute; font-size: 30px;
+             font-family: 'OKDDUNG'; color: seashell; }
+           #scoreTypo{top: 10px; left: 20px;}
+           #display{top: 50px; left: 20px;}
+
+           #timeTypo{ top: 10px; right: 20px;}
+           #timeSet{top: 50px; right: 20px;}
+    
+    @font-face {
+    font-family: 'OKDDUNG';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/OKDDUNG.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal; }
+
+    @font-face {
+    font-family: 'KCC-eunyoung';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/KCC-eunyoung-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+    h1{padding: 5px; font-size: 30px; border-radius: 15px; border: 2px solid black; position: absolute; transform: transLate(-50%,-50%); font-weight: bold; width: 130px; text-align: center;background: none;
+		    left: 50vw; top:  45vH;}
+	    h1:hover{background-color: midnightblue; color: white;}
+
+    .lyr{font-family: 'KCC-eunyoung'; font-size: 40px; position: absolute; transform: transLate(-50%,-50%); text-align: center;
+		    left: 50vw; top: 40px; color: seashell; }
+
+    .word{ animation: fadein 1s forwards ;}
+    @keyframes fadein{
+        from{ opacity: 0;}
+        to{opacity: 1;}
+    }
+
+    </style>
+
+</head>
+<body>
+    <img src = "moon3.jpg" class ="bg">
+
+    <div id="scoreTypo" class =typo>SCORE</div>
+    <div id="display" class =typo></div>
+    <div id="timeTypo" class =typo>TIME</div>
+    <div id="timeSet" class =typo></div>
+    <h1 id="startButton" > START!! </h1>
+
+    <audio id = "sbgm" src = "moonMusic.mp3" ></audio>
+    <div id="lyrics" class =lyr></div>
+    
+    
+
+    <script type="text/javascript">
+
+        var music ="달이 익어가니<br>  서둘러 젊은 피야<br>  민들레 한 송이 들고<br>  <br>  사랑이 어지러이<br>  떠다니는 밤이야<br>  날아가 사뿐히 이루렴<br>  <br>  <br>"
+
+startButton.onclick = function main(){
+    var button = document.getElementById("startButton")
+			button.parentNode.removeChild(button);
+
+            sbgm.play();
+            sbgm.volume = 0.1;
+
+
+            var musicArr = music.split("  ");
+            var m = 0;
+            var myTimer = setInterval(print,2700);
+            function print(){
+                lyrics.innerHTML ="<span class ='word' >" + musicArr[m]; + "</span>"
+                m++;
+            
+        
+            }
+
+    
+        let timer =  setInterval(dd,500);
+        let timer2 =  setInterval(time,1000);
+        let t = 0;
+        let s = 25;
+        let score = 0;
+
+function dd(){
+     t++;
+     makeRat();
+    // if(t == 10){
+     //clearInterval(timer);}
+}
+   
+function time(){
+    timeSet.innerHTML = s;
+    s--;
+    if(s == -1){
+     alert("LOVE POINT:" + score);
+     location.reload();
+    }
+}
+
+var pic = ["heart1", "heart2", "heart3", "heart4", "heart5", "heart6", "heart7"];
+
+function makeRat(){
+     var t = document.createElement("img");
+     t.src = pic [randomBH(0,6)] + ".png";
+     t.className = "heart";
+    
+    
+     let a = randomBH(60,window.innerWidth-60);
+     let b = randomBH(60,window.innerHeight-60);
+
+     function randomBH(min, max){
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random()*(max-min+1)) + min;
+     }
+     t.style.left = a + "px";
+     t.style.top = b +"px";
+     t.style.width = randomBH(30,60) +"px";
+     t.style.height = "auto";
+
+
+     document.body.appendChild(t);
+
+t.onclick = function(){
+            this.remove();
+            score+=10; display.innerHTML = score;}
+}
+
+}
+    </script>
+    
+</body>
+</html>
